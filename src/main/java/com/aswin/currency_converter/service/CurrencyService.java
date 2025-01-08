@@ -31,11 +31,9 @@ public class CurrencyService {
             ExchangeRates exchangeRates = new ExchangeRates(baseCurrency);
             String url = publicAPI + "?access_key=" + this.accessKey + "&base=" + exchangeRates.getBase();
             ExchangeRates response = restTemplate.getForObject(url, ExchangeRates.class);
-            System.out.println(response);
             if (response != null) {
                 exchangeRates.setRates(response.getRates());
             }
-            System.out.println(exchangeRates.getResponseData());
             return exchangeRates.getResponseData();
         } catch (Exception e) {
             throw new RuntimeException("External API is unavailable: " + e.getMessage());
@@ -51,9 +49,7 @@ public class CurrencyService {
 
         if (rates.containsKey(to)) {
             double rate = rates.get(to);
-            System.out.println(rate);
             double convertedAmount = amount * rate;
-            System.out.println(convertedAmount);
             converter.setConvertedAmount(convertedAmount);
         } else {
             throw new IllegalArgumentException("Target currency not available");
